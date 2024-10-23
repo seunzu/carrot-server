@@ -18,28 +18,35 @@ spring:
             allowed-origins:
               - http://localhost:5173
       routes:
+        - id: location
+          uri: lb://LOCATION
+          predicates:
+            - Path=/api/v1/locations/**
+            - Method=GET, OPTIONS
         - id: user
           uri: lb://USER
           predicates:
             - Path=/api/v1/users/**
-            - Method=GET, POST, PUT, DELETE
+            - Method=GET, POST, PUT, DELETE, OPTIONS
         - id: item
-          uri: lb://ITEMS
+          uri: lb://ITEM
           predicates:
             - Path=/api/v1/items/**
-            - Method=GET, POST, PUT, DELETE
+            - Method=GET, POST, PUT, DELETE, OPTIONS
         - id: daily
           uri: lb://DAILY
           predicates:
             - Path=/api/v1/daily/**
-            - Method=GET, POST, PUT, DELETE
+            - Method=GET, POST, PUT, DELETE, OPTIONS
         - id: payment
           uri: lb://PAYMENT
           predicates:
             - Path=/api/v1/payments/**
-            - Method=GET, POST, PUT, DELETE
+            - Method=GET, POST, PUT, OPTIONS
         - id: chat
           uri: lb://CHAT
           predicates:
-            - Path=/api/v1/chat/**
+            - Path=/ws/chat/**
+          filters:
+              - RemoveRequestHeader=Sec-WebSocket-Protocol
 
