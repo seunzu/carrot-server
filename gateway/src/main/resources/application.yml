@@ -1,0 +1,45 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-methods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTIONS
+            allowed-origins:
+              - http://localhost:5173
+      routes:
+        - id: user
+          uri: lb://USER
+          predicates:
+            - Path=/api/v1/users/**
+            - Method=GET, POST, PUT, DELETE
+        - id: item
+          uri: lb://ITEMS
+          predicates:
+            - Path=/api/v1/items/**
+            - Method=GET, POST, PUT, DELETE
+        - id: daily
+          uri: lb://DAILY
+          predicates:
+            - Path=/api/v1/daily/**
+            - Method=GET, POST, PUT, DELETE
+        - id: payment
+          uri: lb://PAYMENT
+          predicates:
+            - Path=/api/v1/payments/**
+            - Method=GET, POST, PUT, DELETE
+        - id: chat
+          uri: lb://CHAT
+          predicates:
+            - Path=/api/v1/chat/**
+
